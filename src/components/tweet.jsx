@@ -1,30 +1,80 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Heart, MessageCircle, BarChart3, MoreHorizontal } from 'lucide-react';
+import axios from "axios"
 
-const Tweet = ({ 
+const Tweet = ({
+  id,
   author = "Sarah Johnson",
   handle = "@TechSavvySarah",
   timeAgo = "2h",
-  content = "Excited to share my latest blog post on the future of AI in healthcare! 🚀 Check it out for insights on how AI is revolutionizing patient care and medical research.",
-  hashtags = ["#AI", "#Healthcare", "#Innovation"],
-  initialLikes = 157,
-  initialComments = 12,
+  content = "test",
+  hashtags = ["#JayKaBeta"],
+  initialLikes = 0,
+  initialComments = 0,
   initialViews = "12k",
-  profileImage = "src/components/logo.png"
+  profileImage = "src/assets/logo.png",
+  subscribers = 0,
 }) => {
+  
+  const getLikes = () => {
+    
+    axios.get(`http://localhost:8080/api/v1/likes/g/${id}`, {withCredentials: true})
+    .then((res) => {
+      setLikes(res.data?.data?.[0]?.total)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+    
+  }
+  
+  const checkIfLiked = ()  => {
+    
+    axios.get(`http://localhost:8080/api/v1/likes/${id}`, {
+      withCredentials: true
+    })
+    .then((res) => {
+      console.log(res)
+      setIsLiked(res.data.data)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+    
+  }
+  
+  useEffect(() => {
+    getLikes()
+    checkIfLiked()
+  }, [])
+  
   const [likes, setLikes] = useState(initialLikes);
   const [comments, setComments] = useState(initialComments);
   const [views] = useState(initialViews);
   const [isLiked, setIsLiked] = useState(false);
+  const [tweetSubscribers,setTweetSubscribers] = useState(subscribers)
+  const [avatar,setAvatar] = useState(profileImage)
+
 
   const handleLike = () => {
-    if (isLiked) {
-      setLikes(likes - 1);
-      setIsLiked(false);
-    } else {
-      setLikes(likes + 1);
-      setIsLiked(true);
-    }
+    
+    console.log(id)
+    
+    if (isLiked) setIsLiked(false)
+      if (!isLiked) setIsLiked(true)
+    
+    axios.post(`http://localhost:8080/api/v1/likes/toggle/t/${id}`, {}, {
+      withCredentials: true
+    })
+    .then((res) => {
+      console.log(res)
+      getLikes()
+      checkIfLiked()
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+    
   };
 
   const handleComment = () => {
@@ -34,12 +84,12 @@ const Tweet = ({
   };
 
   return (
-    <div className="max-w-2xl mx-auto bg-gray-900 text-white p-6 rounded-xl border border-gray-800">
+    <div className="max-w-full mx-auto bg-gray-900 text-white p-6 rounded-xl border border-gray-800">
       {/* Header */}
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center space-x-3">
           <img 
-            src={profileImage} 
+            src={avatar}
             alt={`${author} profile`}
             className="w-12 h-12 rounded-full object-cover"
           />
@@ -48,6 +98,7 @@ const Tweet = ({
               <h3 className="font-bold text-white">{author}</h3>
               <span className="text-gray-400">{handle}</span>
               <span className="text-gray-400">·</span>
+              <span className="text-gray-400">{tweetSubscribers} subs</span>
               <span className="text-gray-400">{timeAgo}</span>
             </div>
           </div>

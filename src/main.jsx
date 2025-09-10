@@ -1,18 +1,55 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
+import { RouterProvider, createBrowserRouter } from 'react-router'
 import App from './App.jsx'
-import Login from "./components/login.jsx"
-import Register from "./components/register.jsx"
 import Video from "./components/video.jsx"
 import Tweet from "./components/tweet.jsx"
-import Channel from "./components/channel.jsx"
 
 // Pages import
+import Login from "./pages/login.jsx"
+import Register from "./pages/register.jsx"
+import Channel from "./pages/channel.jsx"
 import Loader from "./pages/loader.jsx"
+import Home from "./pages/home.jsx"
+import ErrorPage from "./pages/error.jsx"
+import VideoPlayback from "./pages/videoPlayback.jsx"
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <ErrorPage />,
+    children: [
+        {
+            path: "/login",
+            element: <Login />,
+        },
+        {
+          path: "/register",
+          element: <Register />
+        },
+        {
+          path: "/home",
+          element: <Home />
+        },
+        {
+          path: "/channel",
+          element: <Channel />
+        },
+        {
+          path: "/loader",
+          element: <Loader />
+        },
+        {
+          path: "/:vidId",
+          element: <VideoPlayback />
+        },
+    ],
+},
+])
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Channel />
+    <RouterProvider router={router}/>
   </StrictMode>,
 )
