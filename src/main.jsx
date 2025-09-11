@@ -4,6 +4,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router'
 import App from './App.jsx'
 import Video from "./components/video.jsx"
 import Tweet from "./components/tweet.jsx"
+import Post from "./components/post.jsx"
 
 // Pages import
 import Login from "./pages/login.jsx"

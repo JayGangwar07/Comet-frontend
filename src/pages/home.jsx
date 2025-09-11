@@ -2,6 +2,7 @@ import React, { useState,useEffect } from 'react';
 import { Search, Bell, Play } from 'lucide-react';
 import VideoCard from "../components/video.jsx"
 import TweetCard from "../components/tweet.jsx"
+import Post from "../components/post.jsx"
 import axios from "axios"
 import time from "../utils/time.js"
 
@@ -227,11 +228,12 @@ const createContentGrid = () => {
   initialLikes={item.data.initialLikes}
   initialComments={item.data.initialComments}
   subscribers={item.data.subscribers}
-/>
-
-    
-  )
+/>)
 )}
+
+        <div className="fixed ml-[65%] mt-[115%]">
+        <Post />
+        </div>
 
           
         </div>

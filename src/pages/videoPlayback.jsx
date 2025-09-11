@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import { ChevronDown, ThumbsUp, ThumbsDown, MessageCircle, Bell } from 'lucide-react';
+import { useNavigate } from "react-router"
 import axios from "axios"
 import { useParams } from "react-router"
 import Loader from "./loader.jsx"
@@ -34,8 +35,22 @@ export default function VideoWatchingPage() {
 
   const { vidId } = useParams()
   
+  const navigate = useNavigate()
+  
   function postComment(){
-    console.log("Comment send clicked")
+    console.log(comment)
+    
+    axios.post(`http://localhost:8080/api/v1/comments/${vidId}`, {
+      "content": comment
+    },{
+      withCredentials: true
+    })
+    .then((res) => {
+      console.log(res)
+      setComment("")
+    })
+    .catch((err) => console.log(err))
+    
   }
   
   
@@ -137,7 +152,7 @@ export default function VideoWatchingPage() {
       console.log(err)
     })
     
-  }, [descriptionExpanded])
+  }, [])
 
   const handleLike = () => {
     if (isLiked) {
@@ -182,7 +197,9 @@ export default function VideoWatchingPage() {
     }
   };
 
-  const handleComments = () => console.log("Comments clicked");
+  const handleComments = () => {
+    console.log("Clucked Comment")
+  }
 
   const handleSubscribe = () => {
     setVideo(prev => ({
@@ -207,6 +224,37 @@ export default function VideoWatchingPage() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-white">
+    
+    <header className="bg-gray-800 px-4 py-3 flex items-center justify-between border-b border-gray-700">
+        <div className="flex items-center space-x-6">
+          <div className="flex items-center space-x-2">
+            <img
+            src="src/assets/logo.png"
+            className="w-10 h-10"
+            onClick={()=>navigate("/home")}
+            />
+            <span className="font-bold text-lg">Comet</span>
+          </div>
+          
+          <nav className="hidden md:flex space-x-6">
+            <a href="#" className="text-gray-300 hover:text-white transition-colors">Home</a>
+            <a href="#" className="text-gray-300 hover:text-white transition-colors">Shorts</a>
+            <a href="#" className="text-gray-300 hover:text-white transition-colors">Subscriptions</a>
+          </nav>
+        </div>
+
+        <div className="flex-1 max-w-2xl mx-4">
+          <div className="relative">
+          </div>
+        </div>
+
+        <div className="flex items-center space-x-4">
+          <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+            <span className="text-white font-medium text-sm">O</span>
+          </div>
+        </div>
+      </header>
+    
       <div className="w-full">
         {/* Full Width Video Player */}
        
