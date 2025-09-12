@@ -14,6 +14,7 @@ import Loader from "./pages/loader.jsx"
 import Home from "./pages/home.jsx"
 import ErrorPage from "./pages/error.jsx"
 import VideoPlayback from "./pages/videoPlayback.jsx"
+import VideoUpload from "./pages/uploadVideo.jsx"
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
           path: "/:vidId",
           element: <VideoPlayback />
         },
+        {
+          path: "/upload/video",
+          element: <VideoUpload />
+        }
     ],
 },
 ])

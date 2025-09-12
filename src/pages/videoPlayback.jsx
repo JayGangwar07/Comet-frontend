@@ -40,7 +40,7 @@ export default function VideoWatchingPage() {
   function postComment(){
     console.log(comment)
     
-    axios.post(`http://localhost:8080/api/v1/comments/${vidId}`, {
+    axios.post(`https://jaytube.onrender.com/api/v1/comments/${vidId}`, {
       "content": comment
     },{
       withCredentials: true
@@ -82,7 +82,7 @@ export default function VideoWatchingPage() {
   // To check if video is liked
   useEffect(() => {
     
-    axios.get(`http://localhost:8080/api/v1/likes/${vidId}`, {
+    axios.get(`https://jaytube.onrender.com/api/v1/likes/${vidId}`, {
       withCredentials: true
     })
     .then((res) => {
@@ -96,7 +96,7 @@ export default function VideoWatchingPage() {
   // To get video and channel
   useEffect(() => {
     
-    axios.get(`http://localhost:8080/api/v1/videos/${vidId}`, {
+    axios.get(`https://jaytube.onrender.com/api/v1/videos/${vidId}`, {
       withCredentials: true
     })
     .then((res) => {
@@ -131,7 +131,7 @@ export default function VideoWatchingPage() {
     
     console.log("Comment fetching")
     
-    axios.get(`http://localhost:8080/api/v1/comments/${vidId}`, {withCredentials: true})
+    axios.get(`https://jaytube.onrender.com/api/v1/comments/${vidId}`, {withCredentials: true})
     .then((res) => {
       console.log(res)
       
@@ -159,7 +159,7 @@ export default function VideoWatchingPage() {
       setVideo(prev => ({ ...prev, likes: prev.likes - 1 }));
       setIsLiked(false);
       
-      axios.post(`http://localhost:8080/api/v1/likes/toggle/v/${vidId}`,{}, {withCredentials: true})
+      axios.post(`https://jaytube.onrender.com/api/v1/likes/toggle/v/${vidId}`,{}, {withCredentials: true})
       .then((res) => {
         console.log(res)
       })
@@ -173,7 +173,7 @@ export default function VideoWatchingPage() {
       setVideo(prev => ({ ...prev, likes: prev.likes + 1 }));
       setIsLiked(true);
       
-      axios.post(`http://localhost:8080/api/v1/likes/toggle/v/${vidId}`,{}, {withCredentials: true})
+      axios.post(`https://jaytube.onrender.com/api/v1/likes/toggle/v/${vidId}`,{}, {withCredentials: true})
       .then((res) => {
         console.log(res)
       })

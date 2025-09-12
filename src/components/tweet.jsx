@@ -18,7 +18,7 @@ const Tweet = ({
   
   const getLikes = () => {
     
-    axios.get(`http://localhost:8080/api/v1/likes/g/${id}`, {withCredentials: true})
+    axios.get(`https://jaytube.onrender.com/api/v1/likes/g/${id}`, {withCredentials: true})
     .then((res) => {
       setLikes(res.data?.data?.[0]?.total)
     })
@@ -30,7 +30,7 @@ const Tweet = ({
   
   const checkIfLiked = ()  => {
     
-    axios.get(`http://localhost:8080/api/v1/likes/${id}`, {
+    axios.get(`https://jaytube.onrender.com/api/v1/likes/${id}`, {
       withCredentials: true
     })
     .then((res) => {
@@ -63,7 +63,7 @@ const Tweet = ({
     if (isLiked) setIsLiked(false)
       if (!isLiked) setIsLiked(true)
     
-    axios.post(`http://localhost:8080/api/v1/likes/toggle/t/${id}`, {}, {
+    axios.post(`https://jaytube.onrender.com/api/v1/likes/toggle/t/${id}`, {}, {
       withCredentials: true
     })
     .then((res) => {

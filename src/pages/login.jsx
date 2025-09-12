@@ -32,7 +32,7 @@ export default function Login() {
   const login = () => {
     console.log("Log in initiated");
 
-    axios.post("http://localhost:8080/api/v1/users/login", {
+    axios.post("https://jaytube.onrender.com/api/v1/users/login", {
       username: loginData.username,
       password: loginData.password
     }, { withCredentials: true })

@@ -30,7 +30,7 @@ export default function CometInterface() {
   console.log("Video Fetching start");
 
   axios
-    .get(`http://localhost:8080/api/v1/videos/?query=${searchQuery}`, {
+    .get(`https://jaytube.onrender.com/api/v1/videos/?query=${searchQuery}`, {
       withCredentials: true,
     })
     .then(async (res) => {
@@ -42,7 +42,7 @@ export default function CometInterface() {
           let subCount = 0;
           try {
             const subRes = await axios.get(
-              `http://localhost:8080/api/v1/subscriptions/c/${v?.owner?.[0]?._id}`,
+              `https://jaytube.onrender.com/api/v1/subscriptions/c/${v?.owner?.[0]?._id}`,
               { withCredentials: true }
             );
             console.log(subRes)
@@ -77,7 +77,7 @@ export default function CometInterface() {
   // Tweets
   useEffect(() => {
   axios
-    .get("http://localhost:8080/api/v1/tweets", { withCredentials: true })
+    .get("https://jaytube.onrender.com/api/v1/tweets", { withCredentials: true })
     .then((res) => {
       const allTweets = res.data.data || [];
 
